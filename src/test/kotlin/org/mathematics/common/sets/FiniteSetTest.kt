@@ -105,15 +105,15 @@ class FiniteSetTest {
             val otherSet = FiniteSet<RealNumber>(ArrayList(otherNumbers))
 
             assertEquals("intersection is as expected",
-                         FiniteSet(arrayListOf(RealNumber(2.0))),
-                         numberSet.intersection(otherSet))
+                FiniteSet(arrayListOf(RealNumber(2.0))),
+                numberSet.intersection(otherSet))
         }
 
         @Test
         fun `the intersection with the empty set is the empty set`() {
             assertEquals("null set intersection is null",
-                         numberSet.nullSet,
-                         numberSet.intersection(numberSet.nullSet))
+                numberSet.nullSet,
+                numberSet.intersection(numberSet.nullSet))
         }
     }
 }
