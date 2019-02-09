@@ -60,4 +60,37 @@ open class FiniteSet<T : Comparable<T>>(elements: ArrayList<T> = ArrayList<T>())
 
         return false
     }
+
+    /**
+     *  Returns in the index of a given [element] in the set.
+     */
+    fun indexOf(element: T): Int {
+        return this.elements.indexOf(element)
+    }
+
+    /**
+     *  The subset of elements which exist both in this set and another.
+     *
+     *  @param other The other set with which to intersect.
+     */
+    fun intersection(other: FiniteSet<T>): FiniteSet<T> {
+        // Don't waste time cranking the intersection if one of the sets is the null set
+        if (this.cardinality == 0 || other.cardinality == 0) {
+            return this.nullSet
+        }
+
+        val result = FiniteSet<T>()
+
+        this.elements.forEach {
+            if (other.indexOf(it) > -1) {
+                result.addElement(it)
+            }
+        }
+
+        return result
+    }
+
+    override fun toString(): String {
+        return this.elements.joinToString(prefix = "{", postfix = "}", separator = ", ")
+    }
 }

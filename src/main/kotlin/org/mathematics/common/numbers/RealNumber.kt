@@ -26,4 +26,8 @@ open class RealNumber(value: Double) : Addable<RealNumber>, Comparable<RealNumbe
 
         return false
     }
+
+    override fun toString(): String {
+        return this.value.toString()
+    }
 }

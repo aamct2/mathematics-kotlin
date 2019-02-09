@@ -93,5 +93,27 @@ class FiniteSetTest {
         fun `Does not contain the element 4`() {
             assertEquals("sets are not equal", false, numberSet.contains(RealNumber(4.0)))
         }
+
+        @Test
+        fun `Can be written as {1, 2, 3} using toString())`() {
+            assertEquals("toString is as expected", "{1.0, 2.0, 3.0}", numberSet.toString())
+        }
+
+        @Test
+        fun `The intersection with {2, 4} is {2}`() {
+            val otherNumbers = arrayOf(2.0, 4.0).map { it -> RealNumber(it) }
+            val otherSet = FiniteSet<RealNumber>(ArrayList(otherNumbers))
+
+            assertEquals("intersection is as expected",
+                         FiniteSet(arrayListOf(RealNumber(2.0))),
+                         numberSet.intersection(otherSet))
+        }
+
+        @Test
+        fun `the intersection with the empty set is the empty set`() {
+            assertEquals("null set intersection is null",
+                         numberSet.nullSet,
+                         numberSet.intersection(numberSet.nullSet))
+        }
     }
 }
