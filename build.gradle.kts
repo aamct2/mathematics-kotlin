@@ -1,3 +1,5 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+
 buildscript {
   val kotlin_version by extra("1.3.21")
   val junit_version by extra("5.1.0")
@@ -37,6 +39,12 @@ dependencies {
 tasks {
   test {
     useJUnitPlatform()
+
+    testLogging {
+        events("PASSED", "SKIPPED", "FAILED")
+        exceptionFormat = TestExceptionFormat.FULL
+        showStandardStreams = true
+    }
   }
 }
 
