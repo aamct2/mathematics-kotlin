@@ -2,6 +2,11 @@ build:
 	./gradlew build
 .PHONY: build
 
+coverage:
+	./gradlew jacocoTestReport
+	open "./build/reports/jacoco/test/html/index.html"
+.PHONY: coverage
+
 lint:
 	./gradlew ktlint
 .PHONY: lint

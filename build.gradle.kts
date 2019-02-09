@@ -19,6 +19,7 @@ val junit_version: String by extra
 plugins {
   application
   kotlin("jvm").version("1.3.21")
+  jacoco
 }
 
 application {
@@ -34,6 +35,10 @@ dependencies {
   testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:$kotlin_version")
   testImplementation("org.junit.jupiter:junit-jupiter-api:$junit_version")
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junit_version")
+}
+
+jacoco {
+    toolVersion = "0.8.3"
 }
 
 tasks {
