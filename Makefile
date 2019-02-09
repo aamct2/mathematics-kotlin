@@ -1,12 +1,12 @@
 build:
-	gradle build
+	./gradlew build
 .PHONY: build
 
 lint:
-	gradle ktlint
+	./gradlew ktlint
 .PHONY: lint
 
 test:
-	gradle test
+	./gradlew test
 	open "./build/reports/tests/test/index.html"
 .PHONY: test
