@@ -54,5 +54,44 @@ class FiniteSetTest {
         fun `The cardinality of the null set is 0`() {
             assertEquals("cardinality is 0", 0, numberSet.nullSet.cardinality)
         }
+
+        @Test
+        fun `It is equal to itself`() {
+            assertTrue("set is equal to itself", numberSet.equals(numberSet))
+        }
+
+        @Test
+        fun `It is equal to {1, 2, 3} (not itself or a clone)`() {
+            val otherNumbers = arrayOf(1.0, 2.0, 3.0).map { it -> RealNumber(it) }
+            val otherSet = FiniteSet<RealNumber>(ArrayList(otherNumbers))
+
+            assertTrue("set is equal to second instance", numberSet.equals(otherSet))
+        }
+
+        @Test
+        fun `It is not equal to {1, 2}`() {
+            val otherNumbers = arrayOf(1.0, 2.0).map { it -> RealNumber(it) }
+            val otherSet = FiniteSet<RealNumber>(ArrayList(otherNumbers))
+
+            assertEquals("sets are not equal", false, numberSet.equals(otherSet))
+        }
+
+        @Test
+        fun `It is not equal to {2, 3, 4}`() {
+            val otherNumbers = arrayOf(2.0, 3.0, 4.0).map { it -> RealNumber(it) }
+            val otherSet = FiniteSet<RealNumber>(ArrayList(otherNumbers))
+
+            assertEquals("sets are not equal", false, numberSet.equals(otherSet))
+        }
+
+        @Test
+        fun `Contains the element 1`() {
+            assertTrue("contains 1", numberSet.contains(RealNumber(1.0)))
+        }
+
+        @Test
+        fun `Does not contain the element 4`() {
+            assertEquals("sets are not equal", false, numberSet.contains(RealNumber(4.0)))
+        }
     }
 }

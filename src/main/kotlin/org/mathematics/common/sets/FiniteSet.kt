@@ -42,4 +42,22 @@ open class FiniteSet<T : Comparable<T>>(elements: ArrayList<T> = ArrayList<T>())
     fun contains(element: T): Boolean {
         return this.elements.contains(element)
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (other is FiniteSet<*>) {
+            lhsLoop@ for (lhsItem in this.elements) {
+                rhsloop@ for (rhsItem in other.elements) {
+                    if (lhsItem.equals(rhsItem)) {
+                        continue@lhsLoop
+                    }
+                }
+
+                return false
+            }
+
+            return true
+        }
+
+        return false
+    }
 }
