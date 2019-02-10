@@ -203,6 +203,24 @@ class FiniteSetTest {
         val numberSet = FiniteSet<RealNumber>(ArrayList(numbers))
 
         @Test
+        fun `The direct product of {0, 1, 2} with itself is as expected`() {
+            val productSet = numberSet.directProduct(numberSet)
+            val expected = "{(0.0, 0.0), (0.0, 1.0), (0.0, 2.0), (1.0, 0.0), (1.0, 1.0), (1.0, 2.0), (2.0, 0.0), (2.0, 1.0), (2.0, 2.0)}"
+
+            assertEquals("direct product expected", expected, productSet.toString())
+        }
+
+        @Test
+        fun `The direct product with the null set is the null set`() {
+            val nullSetFirst = numberSet.nullSet.directProduct(numberSet)
+            val nullSetSecond = numberSet.directProduct(numberSet.nullSet)
+            val expected = "{}"
+
+            assertEquals("null set first is null set", expected, nullSetFirst.toString())
+            assertEquals("null set second is null set", expected, nullSetSecond.toString())
+        }
+
+        @Test
         fun `Has a power set as expected`() {
             val expected = "{{}, {2.0}, {1.0}, {2.0, 1.0}, {0.0}, {2.0, 0.0}, {1.0, 0.0}, {2.0, 1.0, 0.0}}"
             val powerSet = numberSet.powerSet()

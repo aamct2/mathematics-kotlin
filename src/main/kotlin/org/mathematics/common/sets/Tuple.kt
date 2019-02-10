@@ -28,7 +28,7 @@ open class Tuple(elements: ArrayList<Any> = ArrayList<Any>()) {
 
             lhsLoop@ for (lhsItem in this.elements) {
                 rhsloop@ for (rhsItem in other.elements) {
-                    if (lhsItem != null && lhsItem.equals(rhsItem)) {
+                    if (lhsItem.equals(rhsItem)) {
                         continue@lhsLoop
                     }
                 }

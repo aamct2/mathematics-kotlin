@@ -1,6 +1,6 @@
 package org.mathematics.common.sets
 
-open class FiniteSet<T>(elements: ArrayList<T> = ArrayList<T>()) {
+open class FiniteSet<T : Any>(elements: ArrayList<T> = ArrayList<T>()) {
     private var elements = elements
 
     /**
@@ -62,7 +62,7 @@ open class FiniteSet<T>(elements: ArrayList<T> = ArrayList<T>()) {
             var found = false
 
             innerloop@ for (rhsItem in rhs.elements) {
-                if (lhsItem?.equals(rhsItem) ?: false) {
+                if (lhsItem.equals(rhsItem)) {
                     found = true
                     break@innerloop
                 }
@@ -70,6 +70,32 @@ open class FiniteSet<T>(elements: ArrayList<T> = ArrayList<T>()) {
 
             if (!found) {
                 result.addElement(lhsItem)
+            }
+        }
+
+        return result
+    }
+
+    /**
+     *  Returns the direct product (also known as the cartesian product) of this set with another set.
+     *
+     *  @param rhs The second set.
+     */
+    fun <G : Any> directProduct(rhs: FiniteSet<G>): FiniteSet<Tuple> {
+        val result = FiniteSet<Tuple>()
+
+        // By convention, anything direct product the null set is the null set
+        // For all sets A:    A x {} = {}
+        if (this.equals(this.nullSet) || rhs.equals(rhs.nullSet)) {
+            return result.nullSet
+        }
+
+        for (lhsItem in this.elements) {
+            for (rhsItem in rhs.elements) {
+                val list: ArrayList<Any> = arrayListOf(lhsItem, rhsItem)
+                val pair = Tuple(list)
+
+                result.addElementWithoutCheck(pair)
             }
         }
 
@@ -84,7 +110,7 @@ open class FiniteSet<T>(elements: ArrayList<T> = ArrayList<T>()) {
 
             lhsLoop@ for (lhsItem in this.elements) {
                 rhsloop@ for (rhsItem in other.elements) {
-                    if (lhsItem != null && lhsItem.equals(rhsItem)) {
+                    if (lhsItem.equals(rhsItem)) {
                         continue@lhsLoop
                     }
                 }
