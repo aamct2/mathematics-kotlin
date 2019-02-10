@@ -71,7 +71,7 @@ class FiniteSetTest {
     }
 
     @Nested
-    inner class Given123 {
+    inner class FiniteSetTest_Given123 {
         val numbers = arrayOf(1.0, 2.0, 3.0).map { it -> RealNumber(it) }
         val numberSet = FiniteSet<RealNumber>(ArrayList(numbers))
 
@@ -198,7 +198,7 @@ class FiniteSetTest {
     }
 
     @Nested
-    inner class Given012 {
+    inner class FiniteSetTest_Given012 {
         val numbers = arrayOf(0.0, 1.0, 2.0).map { it -> RealNumber(it) }
         val numberSet = FiniteSet<RealNumber>(ArrayList(numbers))
 

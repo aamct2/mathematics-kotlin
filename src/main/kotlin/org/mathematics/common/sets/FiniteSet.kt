@@ -1,6 +1,6 @@
 package org.mathematics.common.sets
 
-open class FiniteSet<T : Any>(elements: ArrayList<T> = ArrayList<T>()) {
+open class FiniteSet<T : Any>(elements: ArrayList<T> = ArrayList<T>()) : Collection<T> {
     private var elements = elements
 
     /**
@@ -8,6 +8,9 @@ open class FiniteSet<T : Any>(elements: ArrayList<T> = ArrayList<T>()) {
      */
     val cardinality
         get() = this.elements.size
+
+    override val size
+        get() = this.cardinality
 
     /**
      *  Returns the null set (also known as the empty set).
@@ -46,8 +49,18 @@ open class FiniteSet<T : Any>(elements: ArrayList<T> = ArrayList<T>()) {
     /**
      *  Determines whether this set contains a given [element].
      */
-    fun contains(element: T): Boolean {
+    override fun contains(element: T): Boolean {
         return this.elements.contains(element)
+    }
+
+    override fun containsAll(elements: Collection<T>): Boolean {
+        for (element in elements) {
+            if (!this.contains(element)) {
+                return false
+            }
+        }
+
+        return true
     }
 
     /**
@@ -153,6 +166,10 @@ open class FiniteSet<T : Any>(elements: ArrayList<T> = ArrayList<T>()) {
         return result
     }
 
+    override fun isEmpty(): Boolean {
+        return this.cardinality == 0
+    }
+
     /**
      *  Determines whether this set is a subset of a given set.
      *
@@ -166,6 +183,10 @@ open class FiniteSet<T : Any>(elements: ArrayList<T> = ArrayList<T>()) {
         }
 
         return true
+    }
+
+    override fun iterator(): Iterator<T> {
+        return this.elements.iterator()
     }
 
     /**
