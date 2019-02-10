@@ -40,6 +40,36 @@ class FiniteSetTest {
         assertTrue("set still contains the number 1", set.contains(RealNumber(1.0)))
     }
 
+    @Test
+    fun `{{}} unioned with {{2}} is {{}, {2}}`() {
+        val firstSet = FiniteSet<FiniteSet<RealNumber>>(arrayListOf(FiniteSet<RealNumber>()))
+        val secondSet = FiniteSet<FiniteSet<RealNumber>>(arrayListOf(FiniteSet<RealNumber>(arrayListOf(RealNumber(2.0)))))
+
+        assertEquals("union is {{}, {2.0}}", "{{}, {2.0}}", firstSet.union(secondSet).toString())
+    }
+
+    @Test
+    fun `{{}} is not equal to {{2}}`() {
+        val firstSet = FiniteSet<FiniteSet<RealNumber>>(arrayListOf(FiniteSet<RealNumber>()))
+        val secondSet = FiniteSet<FiniteSet<RealNumber>>(arrayListOf(FiniteSet<RealNumber>(arrayListOf(RealNumber(2.0)))))
+
+        assertEquals("sets are not equal", false, firstSet.equals(secondSet))
+    }
+
+    @Test
+    fun `{{}} cloned is still {{}}`() {
+        val firstSet = FiniteSet<FiniteSet<RealNumber>>(arrayListOf(FiniteSet<RealNumber>()))
+
+        assertEquals("clone remains the same", firstSet, firstSet.clone())
+    }
+
+    @Test
+    fun `{{2}} cloned is still {{2}}`() {
+        val secondSet = FiniteSet<FiniteSet<RealNumber>>(arrayListOf(FiniteSet<RealNumber>(arrayListOf(RealNumber(2.0)))))
+
+        assertEquals("clone remains the same", secondSet, secondSet.clone())
+    }
+
     @Nested
     inner class Given123 {
         val numbers = arrayOf(1.0, 2.0, 3.0).map { it -> RealNumber(it) }
@@ -95,6 +125,17 @@ class FiniteSetTest {
         }
 
         @Test
+        fun `The difference with {3, 4} is {1, 2}`() {
+            val otherNumbers = arrayOf(3.0, 4.0).map { it -> RealNumber(it) }
+            val otherSet = FiniteSet<RealNumber>(ArrayList(otherNumbers))
+
+            val expectedNumbers = arrayOf(1.0, 2.0).map { it -> RealNumber(it) }
+            val expectedSet = FiniteSet<RealNumber>(ArrayList(expectedNumbers))
+
+            assertEquals("union is {1, 2}", expectedSet, numberSet.difference(otherSet))
+        }
+
+        @Test
         fun `Can be written as {1, 2, 3} using toString())`() {
             assertEquals("toString is as expected", "{1.0, 2.0, 3.0}", numberSet.toString())
         }
@@ -114,6 +155,59 @@ class FiniteSetTest {
             assertEquals("null set intersection is null",
                 numberSet.nullSet,
                 numberSet.intersection(numberSet.nullSet))
+        }
+
+        @Test
+        fun `Is a subset of {0, 1, 2, 3, 5}`() {
+            val otherNumbers = arrayOf(1.0, 2.0, 3.0, 4.0, 5.0).map { it -> RealNumber(it) }
+            val otherSet = FiniteSet<RealNumber>(ArrayList(otherNumbers))
+
+            assertTrue("subset of a superset", numberSet.isSubsetOf(otherSet))
+        }
+
+        @Test
+        fun `The union with {3, 4} is {1, 2, 3, 4}`() {
+            val otherNumbers = arrayOf(3.0, 4.0).map { it -> RealNumber(it) }
+            val otherSet = FiniteSet<RealNumber>(ArrayList(otherNumbers))
+
+            val expectedNumbers = arrayOf(1.0, 2.0, 3.0, 4.0).map { it -> RealNumber(it) }
+            val expectedSet = FiniteSet<RealNumber>(ArrayList(expectedNumbers))
+
+            assertEquals("union is {1, 2, 3, 4}", expectedSet, numberSet.union(otherSet))
+        }
+
+        @Test
+        fun `The union with {} is {1, 2, 3}`() {
+            val otherSet = FiniteSet<RealNumber>()
+
+            val expectedNumbers = arrayOf(1.0, 2.0, 3.0).map { it -> RealNumber(it) }
+            val expectedSet = FiniteSet<RealNumber>(ArrayList(expectedNumbers))
+
+            assertEquals("union is {1, 2, 3}", expectedSet, numberSet.union(otherSet))
+        }
+
+        @Test
+        fun `The union with {} is {1, 2, 3} (reversed)`() {
+            val otherSet = FiniteSet<RealNumber>()
+
+            val expectedNumbers = arrayOf(1.0, 2.0, 3.0).map { it -> RealNumber(it) }
+            val expectedSet = FiniteSet<RealNumber>(ArrayList(expectedNumbers))
+
+            assertEquals("union is {1, 2, 3}", expectedSet, otherSet.union(numberSet))
+        }
+    }
+
+    @Nested
+    inner class Given012 {
+        val numbers = arrayOf(0.0, 1.0, 2.0).map { it -> RealNumber(it) }
+        val numberSet = FiniteSet<RealNumber>(ArrayList(numbers))
+
+        @Test
+        fun `Has a power set as expected`() {
+            val expected = "{{}, {2.0}, {1.0}, {2.0, 1.0}, {0.0}, {2.0, 0.0}, {1.0, 0.0}, {2.0, 1.0, 0.0}}"
+            val powerSet = numberSet.powerSet()
+
+            assertEquals("power set expected", expected, powerSet.toString())
         }
     }
 }
