@@ -209,5 +209,13 @@ class FiniteSetTest {
 
             assertEquals("power set expected", expected, powerSet.toString())
         }
+
+        @Test
+        fun `The power set of the null set is the set of the null set`() {
+            val expected = FiniteSet(arrayListOf(numberSet.nullSet))
+            val powerSet = numberSet.nullSet.powerSet()
+
+            assertEquals("power set expected", expected, powerSet)
+        }
     }
 }
